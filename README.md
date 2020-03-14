@@ -1,11 +1,11 @@
-# learning
+# NTU coursework
 
 Will include most of the mod I take in NTU.
 
 Mods that I am taking this sem:
 - CZ2005 OS
 - CZ3001 Advanced Computer Architecture
-- CZ3005 ML
+- CZ3005 Machine Learning
 - CZ3006 Computer Network
 - BU8201 Business Finance
 
