@@ -153,32 +153,55 @@ void TestValueMinusOne()
 //1. Declare any paramters here.
 
 //fill your code
-Lock *isLock = new Lock("Lock1");
+#include "synch.h"
+Semaphore *mutex;
+Semaphore *s = new Semaphore("Semaphore_Consistent", 1);
+
+//Alternative method:
+//Lock *isLock = new Lock("Lock1");
 
 //2. implement the new version of Inc: Inc_Consistent
 void Inc_Consistent(_int which)
 {
 	//fill your code
-	isLock->Acquire();
+	s->P();
 	int a=value;
 	a++;
+	currentThread->Yield();
 	value=a;
 	printf("**** Inc thread %d new value %d\n", (int) which, value);
-	currentThread->Yield();
-	isLock->Release();
+	s->V();
+
+	//Alternative method:
+	//isLock->Acquire();
+	//int a=value;
+	//a++;
+	//value=a;
+	//printf("**** Inc thread %d new value %d\n", (int) which, value);
+	//currentThread->Yield();
+	//isLock->Release();
 }
 
 //3. implement the new version of Dec: Dec_Consistent
 void Dec_Consistent(_int which)
 {
 	//fill your code
-	isLock->Acquire();
+	s->P();
 	int a=value;
 	a--;
 	currentThread->Yield();
 	value=a;
 	printf("**** Dec thread %d new value %d\n", (int) which, value);
-	isLock->Release();
+	s->V();
+
+	//Alternative method:
+	//isLock->Acquire();
+	//int a=value;
+	//a--;
+	//currentThread->Yield();
+	//value=a;
+	//printf("**** Dec thread %d new value %d\n", (int) which, value);
+	//isLock->Release();
 }
 
 //4. implement TestValueMinusOne by create two threads with Inc_Consistent and two threads with Dec_Consistent
@@ -216,11 +239,11 @@ void TestConsistency()
 void
 ThreadTest()
 {
-	int loopTimes=0;
+    int loopTimes=0;
     DEBUG('t', "Entering SimpleTest");
-	//for exercise 1.
-    TestValueOne();
-    TestValueMinusOne();
+    //for exercise 1.
+    //TestValueOne();
+    //TestValueMinusOne();
     //for exercise 2.
     TestConsistency();
 }
