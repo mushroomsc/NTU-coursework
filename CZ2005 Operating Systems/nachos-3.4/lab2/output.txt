@@ -1,3 +1,4 @@
+ubuntu@ubuntu:~/Desktop/nachos-3.4/lab2$ ./nachos -d
 	interrupts: off -> on
 
 == Tick 10 ==
@@ -7,9 +8,9 @@ Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
 Entering SimpleTestenter TestValueOne, value=0...
-Forking thread Inc_v1_1 #0 with func=0x565ebe80, arg=1, join=NO
+Forking thread Dec_v1_1 #0 with func=0x56614ede, arg=3, join=NO
 	interrupts: on -> off
-Putting thread Inc_v1_1 #0 on ready list.
+Putting thread Dec_v1_1 #0 on ready list.
 	interrupts: off -> on
 
 == Tick 20 ==
@@ -18,9 +19,9 @@ Time: 20, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_v1_1 #0 with func=0x565ebede, arg=2, join=NO
+Forking thread Dec_v1_2 #0 with func=0x56614ede, arg=4, join=NO
 	interrupts: on -> off
-Putting thread Dec_v1_1 #0 on ready list.
+Putting thread Dec_v1_2 #0 on ready list.
 	interrupts: off -> on
 
 == Tick 30 ==
@@ -29,9 +30,9 @@ Time: 30, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_v1_2 #0 with func=0x565ebede, arg=3, join=NO
+Forking thread Inc_v1_1 #0 with func=0x56614e80, arg=1, join=NO
 	interrupts: on -> off
-Putting thread Dec_v1_2 #0 on ready list.
+Putting thread Inc_v1_1 #0 on ready list.
 	interrupts: off -> on
 
 == Tick 40 ==
@@ -40,7 +41,7 @@ Time: 40, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Inc_v1_2 #0 with func=0x565ebe80, arg=4, join=YES
+Forking thread Inc_v1_2 #0 with func=0x56614e80, arg=2, join=YES
 	interrupts: on -> off
 Putting thread Inc_v1_2 #0 on ready list.
 	interrupts: off -> on
@@ -65,7 +66,7 @@ End of pending interrupts
 	interrupts: off -> on
 	interrupts: on -> off
 Sleeping thread main #0
-Switching from thread main #0 to thread Inc_v1_1 #0
+Switching from thread main #0 to thread Dec_v1_1 #0
 	interrupts: off -> on
 
 == Tick 70 ==
@@ -75,9 +76,9 @@ Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
 	interrupts: on -> off
-Yielding thread Inc_v1_1 #0
-Putting thread Inc_v1_1 #0 on ready list.
-Switching from thread Inc_v1_1 #0 to thread Dec_v1_1 #0
+Yielding thread Dec_v1_1 #0
+Putting thread Dec_v1_1 #0 on ready list.
+Switching from thread Dec_v1_1 #0 to thread Dec_v1_2 #0
 	interrupts: off -> on
 
 == Tick 80 ==
@@ -87,9 +88,9 @@ Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
 	interrupts: on -> off
-Yielding thread Dec_v1_1 #0
-Putting thread Dec_v1_1 #0 on ready list.
-Switching from thread Dec_v1_1 #0 to thread Dec_v1_2 #0
+Yielding thread Dec_v1_2 #0
+Putting thread Dec_v1_2 #0 on ready list.
+Switching from thread Dec_v1_2 #0 to thread Inc_v1_1 #0
 	interrupts: off -> on
 
 == Tick 90 ==
@@ -99,9 +100,9 @@ Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
 	interrupts: on -> off
-Yielding thread Dec_v1_2 #0
-Putting thread Dec_v1_2 #0 on ready list.
-Switching from thread Dec_v1_2 #0 to thread Inc_v1_2 #0
+Yielding thread Inc_v1_1 #0
+Putting thread Inc_v1_1 #0 on ready list.
+Switching from thread Inc_v1_1 #0 to thread Inc_v1_2 #0
 	interrupts: off -> on
 
 == Tick 100 ==
@@ -113,8 +114,8 @@ End of pending interrupts
 	interrupts: on -> off
 Yielding thread Inc_v1_2 #0
 Putting thread Inc_v1_2 #0 on ready list.
-Switching from thread Inc_v1_2 #0 to thread Inc_v1_1 #0
-Now in thread Inc_v1_1 #0
+Switching from thread Inc_v1_2 #0 to thread Dec_v1_1 #0
+Now in thread Dec_v1_1 #0
 	interrupts: off -> on
 
 == Tick 110 ==
@@ -123,22 +124,7 @@ Time: 110, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-**** Inc thread 1 new value 1
-	interrupts: on -> off
-Finishing thread Inc_v1_1 #0
-Sleeping thread Inc_v1_1 #0
-Switching from thread Inc_v1_1 #0 to thread Dec_v1_1 #0
-Now in thread Dec_v1_1 #0
-Deleting thread Inc_v1_1 #0
-	interrupts: off -> on
-
-== Tick 120 ==
-	interrupts: on -> off
-Time: 120, interrupts off
-Pending interrupts:
-End of pending interrupts
-	interrupts: off -> on
-**** Dec thread 2 new value -1
+**** Dec thread 3 new value -1
 	interrupts: on -> off
 Finishing thread Dec_v1_1 #0
 Sleeping thread Dec_v1_1 #0
@@ -147,19 +133,34 @@ Now in thread Dec_v1_2 #0
 Deleting thread Dec_v1_1 #0
 	interrupts: off -> on
 
+== Tick 120 ==
+	interrupts: on -> off
+Time: 120, interrupts off
+Pending interrupts:
+End of pending interrupts
+	interrupts: off -> on
+**** Dec thread 4 new value -1
+	interrupts: on -> off
+Finishing thread Dec_v1_2 #0
+Sleeping thread Dec_v1_2 #0
+Switching from thread Dec_v1_2 #0 to thread Inc_v1_1 #0
+Now in thread Inc_v1_1 #0
+Deleting thread Dec_v1_2 #0
+	interrupts: off -> on
+
 == Tick 130 ==
 	interrupts: on -> off
 Time: 130, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-**** Dec thread 3 new value -1
+**** Inc thread 1 new value 1
 	interrupts: on -> off
-Finishing thread Dec_v1_2 #0
-Sleeping thread Dec_v1_2 #0
-Switching from thread Dec_v1_2 #0 to thread Inc_v1_2 #0
+Finishing thread Inc_v1_1 #0
+Sleeping thread Inc_v1_1 #0
+Switching from thread Inc_v1_1 #0 to thread Inc_v1_2 #0
 Now in thread Inc_v1_2 #0
-Deleting thread Dec_v1_2 #0
+Deleting thread Inc_v1_1 #0
 	interrupts: off -> on
 
 == Tick 140 ==
@@ -168,7 +169,7 @@ Time: 140, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-**** Inc thread 4 new value 1
+**** Inc thread 2 new value 1
 Thread Inc_v1_2 #0 is here to revive the thread that called it
 	interrupts: on -> off
 thread Inc_v1_2 acquires semaphore Join?
@@ -208,7 +209,7 @@ End of pending interrupts
 	interrupts: off -> on
 congratulations! passed.
 enter TestValueMinusOne, value=0...
-Forking thread Inc_v2_1 #0 with func=0x565ec162, arg=1, join=NO
+Forking thread Inc_v2_1 #0 with func=0x56614e80, arg=1, join=NO
 	interrupts: on -> off
 Putting thread Inc_v2_1 #0 on ready list.
 	interrupts: off -> on
@@ -219,7 +220,7 @@ Time: 180, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Inc_v2_2 #0 with func=0x565ec162, arg=2, join=NO
+Forking thread Inc_v2_2 #0 with func=0x56614e80, arg=2, join=NO
 	interrupts: on -> off
 Putting thread Inc_v2_2 #0 on ready list.
 	interrupts: off -> on
@@ -230,7 +231,7 @@ Time: 190, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_v2_1 #0 with func=0x565ec1c0, arg=3, join=NO
+Forking thread Dec_v2_1 #0 with func=0x56614ede, arg=3, join=NO
 	interrupts: on -> off
 Putting thread Dec_v2_1 #0 on ready list.
 	interrupts: off -> on
@@ -241,7 +242,7 @@ Time: 200, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_v2_2 #0 with func=0x565ec1c0, arg=4, join=YES
+Forking thread Dec_v2_2 #0 with func=0x56614ede, arg=4, join=YES
 	interrupts: on -> off
 Putting thread Dec_v2_2 #0 on ready list.
 	interrupts: off -> on
@@ -409,7 +410,7 @@ End of pending interrupts
 	interrupts: off -> on
 congratulations! passed.
 enter TestConsistency, value=0...
-Forking thread Inc_Consistent_1 #0 with func=0x565ec444, arg=1, join=YES
+Forking thread Inc_Consistent_1 #0 with func=0x56615444, arg=1, join=YES
 	interrupts: on -> off
 Putting thread Inc_Consistent_1 #0 on ready list.
 	interrupts: off -> on
@@ -420,7 +421,7 @@ Time: 340, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Inc_Consistent_2 #0 with func=0x565ec444, arg=2, join=YES
+Forking thread Inc_Consistent_2 #0 with func=0x56615444, arg=2, join=YES
 	interrupts: on -> off
 Putting thread Inc_Consistent_2 #0 on ready list.
 	interrupts: off -> on
@@ -431,7 +432,7 @@ Time: 350, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_Consistent_1 #0 with func=0x565ec4c6, arg=3, join=YES
+Forking thread Dec_Consistent_1 #0 with func=0x566154c6, arg=3, join=YES
 	interrupts: on -> off
 Putting thread Dec_Consistent_1 #0 on ready list.
 	interrupts: off -> on
@@ -442,7 +443,7 @@ Time: 360, interrupts off
 Pending interrupts:
 End of pending interrupts
 	interrupts: off -> on
-Forking thread Dec_Consistent_2 #0 with func=0x565ec4c6, arg=4, join=YES
+Forking thread Dec_Consistent_2 #0 with func=0x566154c6, arg=4, join=YES
 	interrupts: on -> off
 Putting thread Dec_Consistent_2 #0 on ready list.
 	interrupts: off -> on

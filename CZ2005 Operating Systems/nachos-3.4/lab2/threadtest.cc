@@ -47,12 +47,22 @@ void Dec(_int which)
 void Inc_v1(_int which)
 {
 	//fill your code
+	int a=value;
+	a++;
+	currentThread->Yield();
+	value=a;
+	printf("**** Inc thread %d new value %d\n", (int) which, value);
 }
 
 //2. implement the new version of Dec: Dec_v1
 void Dec_v1(_int which)
 {
 	//fill your code
+	int a=value;
+	a--;
+	currentThread->Yield();
+	value=a;
+	printf("**** Dec thread %d new value %d\n", (int) which, value);
 }
 
 //3. implement TestValueOne by create two threads with Inc_v1 and two threads with Dec_v1
@@ -61,8 +71,19 @@ void TestValueOne()
 {
 	value=0;
 	printf("enter TestValueOne, value=%d...\n", value);
-	//1. fill your code here.
 
+	//1. fill your code here.
+	Thread *it1 = new Thread("Inc_v1_1");
+	Thread *it2 = new Thread("Inc_v1_2");
+	Thread *dt1 = new Thread("Dec_v1_1");
+	Thread *dt2 = new Thread("Dec_v1_2");
+
+	dt1->Fork(Dec_v1, 3, 0);
+	dt2->Fork(Dec_v1, 4, 0);
+	it1->Fork(Inc_v1, 1, 0);
+	it2->Fork(Inc_v1, 2, 1);
+	
+	currentThread->Join(it2);
 
 	//2. checking the value. you should not modify the code or add any code lines behind
 	//this section.
@@ -73,18 +94,28 @@ void TestValueOne()
 }
 
 
-//targetV=-2;
-//After executing TestValueMinusTwo(), the value should be -2.
+//targetV=-1;
+//After executing TestValueMinusOne(), the value should be -1.
 //1. implement the new version of Inc: Inc_v2
 void Inc_v2(_int which)
 {
 	//fill your code
+	int a=value;
+	a++;
+	currentThread->Yield();
+	value=a;
+	printf("**** Inc thread %d new value %d\n", (int) which, value);
 }
 
 //2. implement the new version of Dec: Dec_v2
 void Dec_v2(_int which)
 {
 	//fill your code
+	int a=value;
+	a--;
+	currentThread->Yield();
+	value=a;
+	printf("**** Dec thread %d new value %d\n", (int) which, value);
 }
 
 //3. implement TestValueMinusOne by create two threads with Inc_v2 and two threads with Dec_v2
@@ -94,9 +125,18 @@ void TestValueMinusOne()
 	value=0;
 	printf("enter TestValueMinusOne, value=%d...\n", value);
 
-
 	//fill your code
+	Thread *it1 = new Thread("Inc_v2_1");
+	Thread *it2 = new Thread("Inc_v2_2");
+	Thread *dt1 = new Thread("Dec_v2_1");
+	Thread *dt2 = new Thread("Dec_v2_2");
+	
+	it1->Fork(Inc_v1, 1, 0);
+	it2->Fork(Inc_v1, 2, 0);
+	dt1->Fork(Dec_v1, 3, 0);
+	dt2->Fork(Dec_v1, 4, 1);
 
+	currentThread->Join(dt2);
 
 	//2. checking the value. you should not modify the code or add any code lines behind
 	//this section.
@@ -113,17 +153,32 @@ void TestValueMinusOne()
 //1. Declare any paramters here.
 
 //fill your code
+Lock *isLock = new Lock("Lock1");
 
 //2. implement the new version of Inc: Inc_Consistent
 void Inc_Consistent(_int which)
 {
 	//fill your code
+	isLock->Acquire();
+	int a=value;
+	a++;
+	value=a;
+	printf("**** Inc thread %d new value %d\n", (int) which, value);
+	currentThread->Yield();
+	isLock->Release();
 }
 
 //3. implement the new version of Dec: Dec_Consistent
 void Dec_Consistent(_int which)
 {
 	//fill your code
+	isLock->Acquire();
+	int a=value;
+	a--;
+	currentThread->Yield();
+	value=a;
+	printf("**** Dec thread %d new value %d\n", (int) which, value);
+	isLock->Release();
 }
 
 //4. implement TestValueMinusOne by create two threads with Inc_Consistent and two threads with Dec_Consistent
@@ -134,7 +189,20 @@ void TestConsistency()
 	printf("enter TestConsistency, value=%d...\n", value);
 
 	//fill your code
+	Thread *it1 = new Thread("Inc_Consistent_1");
+	Thread *it2 = new Thread("Inc_Consistent_2");
+	Thread *dt1 = new Thread("Dec_Consistent_1");
+	Thread *dt2 = new Thread("Dec_Consistent_2");
+	
+	it1->Fork(Inc_Consistent, 1, 1);
+	it2->Fork(Inc_Consistent, 2, 1);
+	dt1->Fork(Dec_Consistent, 3, 1);
+	dt2->Fork(Dec_Consistent, 4, 1);
 
+	currentThread->Join(it1);
+	currentThread->Join(it2);
+	currentThread->Join(dt1);
+	currentThread->Join(dt2);
 
 	//2. checking the value. you should not modify the code or add any code lines behind
 	//this section.
@@ -152,7 +220,7 @@ ThreadTest()
     DEBUG('t', "Entering SimpleTest");
 	//for exercise 1.
     TestValueOne();
-    //TestValueMinusOne();
+    TestValueMinusOne();
     //for exercise 2.
-    //TestConsistency();
+    TestConsistency();
 }
