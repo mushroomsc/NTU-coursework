@@ -2,7 +2,8 @@
 
 ---
 
-## Why do I get Errors like `../Makefile.common:161: arch/intel-i386-linux/depends/main.d: No such file or directory`? ##
+## Why do I get Errors like ##
+`../Makefile.common:161: arch/intel-i386-linux/depends/main.d: No such file or directory`? 
 
 - Outdated gcc and g++ packages
 
