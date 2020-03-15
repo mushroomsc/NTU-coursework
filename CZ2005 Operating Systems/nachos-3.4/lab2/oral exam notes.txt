@@ -1,0 +1,62 @@
+Qn1:	dt1->Fork(Dec_v1, 3, 0);
+	dt2->Fork(Dec_v1, 4, 0);
+	it1->Fork(Inc_v1, 1, 0);
+	it2->Fork(Inc_v1, 2, 1);
+	currentThread->Join(it2);
+
+Original: 
+1. main fork3
+2. main fork4
+3. main fork1
+4. main fork2
+5. main join2
+6. main switch to 3
+7. 3
+8. 4
+9. 1
+10. 2
+11. 3
+12. 4
+13. 1
+14. 2 
+15. 2 V
+16. 2 switch to main
+17. end
+
+As long as it1/it2 is at the bottom, test can still pass.
+Reorder:	it2->Fork(Inc_v1, 2, 1);
+	dt1->Fork(Dec_v1, 3, 0);
+	dt2->Fork(Dec_v1, 4, 0);
+	it1->Fork(Inc_v1, 1, 0);
+	currentThread->Join(it2);
+But after step11, main is put to ready list in step12, 
+and 2 switch to 3 in step 13, i.e., step 15-16 is moved to 12-13.
+
+Reorder:
+	it2->Fork(Inc_v1, 2, 1);
+	currentThread->Join(it2);
+	dt1->Fork(Dec_v1, 3, 0);
+	dt2->Fork(Dec_v1, 4, 0);
+	it1->Fork(Inc_v1, 1, 0);
+
+1. main fork2
+2. main join2
+3. main switch to 2
+4. 2 yield
+5. 2 result
+6. 2 V
+7. 2 switch to main
+8. main fork3
+...
+11. test passed
+Note: after execution of full code, value = 2
+
+Reorder:	dt1->Fork(Dec_v1, 3, 1);
+	dt2->Fork(Dec_v1, 4, 1);
+	it1->Fork(Inc_v1, 1, 1);
+	it2->Fork(Inc_v1, 2, 1);
+	currentThread->Join(it1);
+	currentThread->Join(it2);
+	currentThread->Join(dt1);
+	currentThread->Join(dt2);
+Nothing will happen except that time is longer.
