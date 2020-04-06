@@ -1,6 +1,6 @@
 # NTU coursework
 
-Will include most of the mod I take in NTU.
+Plan to include most of the mods I take in NTU.
 
 Mods that I am taking this sem:
 - CZ2005 OS
